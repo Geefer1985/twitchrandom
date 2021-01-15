@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Random Twitch Stream</title>
+    <title>I’d Rather Watch LOL</title>
 </head>
 
 <body style="margin: 0; padding: 0">
@@ -28,7 +28,8 @@
                 new Twitch.Embed("twitch-embed", {
                     width: '100%',
                     height: '100%',
-                    channel: stream,
+                    layout: "video",
+			channel: stream,
                     parent: ['localhost'],
                     muted: false,
                 });
