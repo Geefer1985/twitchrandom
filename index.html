@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Random Twitch Stream</title>
+</head>
+
+<body style="margin: 0; padding: 0">
+    <div class="container-fluid m-0 p-0 h-100">
+        <button id="random"> Random </button>
+        <div id="twitch-embed" style="height: calc(100vh - 22px)"></div>
+    </div>
+
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <script type="text/javascript">
+        function getRandom() {
+            fetch(`https://api.twitch.tv/kraken/streams?limit=100&language=en`, {
+                headers: {
+                    'Accept': 'application/vnd.twitchtv.v5+json',
+                    'Client-ID': 'qtyq6ihtyfo8f51zxchrudov96xilx'
+                }
+            }).then(data => data.json()).then(json => {
+                const stream = json.streams[Math.floor(Math.random() * json.streams.length)].channel.name;
+                document.querySelector('#twitch-embed').innerHTML = "";
+                new Twitch.Embed("twitch-embed", {
+                    width: '100%',
+                    height: '100%',
+                    channel: stream,
+                    parent: ['localhost'],
+                    muted: false,
+                });
+                document.querySelector('#twitch-embed').requestFullscreen();
+            })
+        }
+
+        document.querySelector('#random').addEventListener('click', getRandom)
+
+        getRandom()
+
+        setInterval(() => {
+            getRandom()
+        }, 60 * 1000 * 10)
+    </script>
+</body>
+
+</html>
